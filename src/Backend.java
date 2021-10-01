@@ -20,44 +20,23 @@ public class Backend {
     public static boolean isFileType(File fileName, String extention) {
         return fileName.getName().endsWith(extention);
     }
-
-    /**
-     *
-     * @param catList
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
     public static void startBackend(List<Catalogue> catList) throws IOException, ClassNotFoundException {
         createMainDir();
         readAllCats(catList);
     }
 
-    /**
-     *
-     * @param fileName
-     * @return
-     */
+   
     public static boolean fileExists(File fileName) {
         return new File("files/" + fileName.getName()).exists();
     }
 
-    /**
-     * Checks if the main Directory Exists
-     *
-     * @return true is returned if directory needs to be created.
-     */
+   
     private static boolean createMainDir() {
         File mainDir = new File("Catalogues");
         return mainDir.mkdir();
     }
 
-    /**
-     * method to read all catalogues from file to a list
-     *
-     * @param catList list of catalogues to add to
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
+   
     private static void readAllCats(List<Catalogue> catList) throws IOException, ClassNotFoundException {
         File dir = new File("Catalogues");
 
@@ -77,13 +56,6 @@ public class Backend {
         }
     }
 
-    /**
-     * method to save catalogue to file
-     *
-     * @param catList
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
     public static void save(List<Catalogue> catList) throws FileNotFoundException, IOException {
         for (File f : new File("Catalogues").listFiles()) {//Delete all files from directory
             f.delete();
@@ -100,14 +72,7 @@ public class Backend {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Catalogue options">
-    /**
-     * method to rename a catalogue in the list
-     *
-     * @param catalogue catalogue to rename
-     * @param newName new name of catalogue
-     * @param catList list of catalogues to use
-     * @return
-     */
+    
     public static boolean renameCatalogue(Catalogue catalogue, String newName, List<Catalogue> catList) {
         for (Catalogue c : catList) {
             if (c.getCatName().equalsIgnoreCase(catalogue.getCatName())) {
@@ -120,13 +85,7 @@ public class Backend {
         return false;
     }
 
-    /**
-     * get the index of a catalogue from a catalogue list
-     *
-     * @param catName name of the catalogue
-     * @param catList name of the list
-     * @return an integer value
-     */
+   
     private static int getCatIndex(String catName, List<Catalogue> catList) {
         for (Catalogue c : catList) {
             if (c.getCatName().equalsIgnoreCase(catName)) {
@@ -136,13 +95,7 @@ public class Backend {
         return -1;
     }
 
-    /**
-     * delete a catalogue from a list using index
-     *
-     * @param catName name of catalogue
-     * @param catList name of catalogue list
-     * @return true returned if catalogue deleted
-     */
+   
     public static boolean deleteCatalogue(String catName, List<Catalogue> catList) {
         int delInd = getCatIndex(catName, catList);
         if (delInd != -1) {
@@ -152,13 +105,7 @@ public class Backend {
         return false;
     }
 
-    /**
-     * method to check if catalogue is in list
-     *
-     * @param catName name of catalogue to delete
-     * @param catList name of catalogue list to delete from
-     * @return returned true if catalogue is in the list
-     */
+  
     private static boolean isInCatList(String catName, List<Catalogue> catList) {
         for (Catalogue c : catList) {
             if (c.getCatName().equalsIgnoreCase(catName)) {
@@ -168,13 +115,7 @@ public class Backend {
         return false;
     }
 
-    /**
-     * method to add catalogue to a list
-     *
-     * @param catName catalogue to add
-     * @param catList catalogue list to add to
-     * @return true is returned if the catalogue was added
-     */
+  
     public static boolean addCatalogue(Catalogue catName, List<Catalogue> catList) {
         if (!isInCatList(catName.getCatName(), catList)) {
             return catList.add(catName);
@@ -183,13 +124,6 @@ public class Backend {
     }
 //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Multimedia Options">
-    /**
-     * method to move a file in to the program's default directory
-     *
-     * @param fileName File to use
-     * @throws IOException
-     */
     public static void moveToDefaultDir(File fileName) throws IOException {
 
         File copyTo = new File("files/" + fileName.getName());
@@ -222,20 +156,7 @@ public class Backend {
         return id;
     }
 
-    /**
-     * Add multimedia to a catalogue within a list
-     *
-     * @param id id of multimedia
-     * @param multimediaName name of the multimedia to add
-     * @param multimediaTextFileLocation name and location of textfile to add to
-     * multimedia
-     * @param mulimediaImgFileLocation name and location of image file to add to
-     * multimedia
-     * @param catToAddTo the catalogue to add multimedia to
-     * @param catList name of catalogue list
-     * @return true is returned if multimedia added sucessfully
-     * @throws java.io.IOException
-     */
+   
     public static boolean addMultimedia(int id, String multimediaName, File multimediaTextFileLocation, File mulimediaImgFileLocation, Catalogue catToAddTo, List<Catalogue> catList) throws IOException {
         id = generateMultimediaId(catToAddTo);
         Multimedia mToAdd = new Multimedia(id, multimediaName, Calendar.getInstance().getTime(), "files/" + multimediaTextFileLocation.getName(), "files/" + mulimediaImgFileLocation.getName());//add nultimedia to Catalogue
@@ -248,13 +169,7 @@ public class Backend {
         return false;
     }
 
-    /**
-     * retrieving the index of a multimedia in a list
-     *
-     * @param id id of multimedia to serach for
-     * @param multList name of multimedia list
-     * @return -1 returned if index not found. else return index
-     */
+   
     private static int indexOfMultimedia(int id, List<Multimedia> multList) {
         for (Multimedia m : multList) {
             if (m.getMultID() == id) {
@@ -264,14 +179,7 @@ public class Backend {
         return -1;
     }
 
-    /**
-     * method to remove a multimedia from a list
-     *
-     * @param multimediaToRemove integer of multimedia to remove
-     * @param catalogueToUse string of the catalogue to use
-     * @param catList name of the list of catalogues to use
-     * @return true is returned if multimedia successfully removed
-     */
+   
     public static boolean removeMultimedia(int multimediaToRemove, String catalogueToUse, List<Catalogue> catList) {
         for (Catalogue c : catList) {
             if (c.getCatName().equalsIgnoreCase(catalogueToUse)) {
@@ -285,17 +193,7 @@ public class Backend {
         return false;
     }
 
-    /**
-     * edit a multimedia
-     *
-     * @param multimediaToChange integer id of multimedia
-     * @param newName
-     * @param newImageFile
-     * @param newTextFileName name of new text file
-     * @param catalogueToUse catalogue's name to use
-     * @param catList catalogue list to use
-     * @return true returned if name change successful
-     */
+    
     public static boolean editMultimedia(int multimediaToChange, String newName, File newImageFile, File newTextFileName, String catalogueToUse, List<Catalogue> catList) {
         for (Catalogue c : catList) {
             if (c.getCatName().equalsIgnoreCase(catalogueToUse)) {
@@ -315,13 +213,7 @@ public class Backend {
     }
 
 //</editor-fold>
-    /**
-     * method to check if input is valid
-     *
-     * @param inputCheck
-     * @param whileCondition
-     * @return
-     */
+   
     private static boolean isValidInput(boolean whileCondition) {
         try {
             return whileCondition;
@@ -331,12 +223,7 @@ public class Backend {
 
     }
 
-    /**
-     * method to show main menu
-     *
-     * @param listName
-     * @throws IOException
-     */
+   
     private static void mainMenu(List<Catalogue> listName) throws IOException {
          System.out.println("\n ***** WELCOME TO LockedMe.COM *****");
         System.out.println("\n Developed BY komal patil");
@@ -369,12 +256,7 @@ public class Backend {
         }
     }
 
-    /**
-     * method to show adding catalogue
-     *
-     * @param listName
-     * @throws IOException
-     */
+   
     private static void addCat(List<Catalogue> listName) throws IOException {
         System.out.print("Enter catalogue name: ");
         Scanner kb = new Scanner(System.in);
@@ -393,12 +275,7 @@ public class Backend {
 
     }
 
-    /**
-     * method to show searching catalogue
-     *
-     * @param listName
-     * @throws IOException
-     */
+   
     private static void searchCat(List<Catalogue> listName) throws IOException {
         System.out.print("Enter catalogue name: ");
         Scanner kb = new Scanner(System.in);
@@ -447,13 +324,7 @@ public class Backend {
         }
     }
 
-    /**
-     * method to show editing a catalogue
-     *
-     * @param listName
-     * @param catName
-     * @throws IOException
-     */
+   
     private static void editCat(List<Catalogue> listName, String catName) throws IOException {
         System.out.println("Edit Catalogue");
         System.out.println("Enter New Catalogue Name: ");
@@ -476,13 +347,7 @@ public class Backend {
         }
     }
 
-    /**
-     * method to show deleting a catalogue
-     *
-     * @param listName
-     * @param catName
-     * @throws IOException
-     */
+   
     private static void deleteCat(List<Catalogue> listName, String catName) throws IOException {
         System.out.println("Are you sure you want to delete this catalogue?(y/n)");
         Scanner kb = new Scanner(System.in);
@@ -509,13 +374,7 @@ public class Backend {
 
     }
 
-    /**
-     * method to show viewing a catalogue
-     *
-     * @param listName
-     * @param catName
-     * @throws IOException
-     */
+   
     private static void viewCat(List<Catalogue> listName, String catName) throws IOException {
         System.out.println("Catalogue details of " + catName);
         for (Catalogue c : listName) {
@@ -536,13 +395,7 @@ public class Backend {
         searchCat(listName);
     }
 
-    /**
-     * method to show multimedia menu
-     *
-     * @param listName
-     * @param catName
-     * @throws IOException
-     */
+  
     private static void multMenu(List<Catalogue> listName, String catName) throws IOException {
         System.out.println("Multimedia Options");
         System.out.println("(1) Add multimedia");
@@ -572,12 +425,7 @@ public class Backend {
         }
     }
 
-    /**
-     * method to check if a string is an integer
-     *
-     * @param checkInt parse string to check if its an integer
-     * @return true is returned if the string is integer
-     */
+   
     private static boolean isInt(String checkInt) {
         try {
             Integer.parseInt(checkInt);
@@ -587,13 +435,7 @@ public class Backend {
         return true;
     }
 
-    /**
-     * method to show addding a multimedia
-     *
-     * @param listName
-     * @param catName
-     * @throws IOException
-     */
+  
     private static void addMult(List<Catalogue> listName, String catName) throws IOException {
         System.out.println("Enter Name of Multimedia.");
         Scanner kb = new Scanner(System.in);
@@ -621,13 +463,7 @@ public class Backend {
 
     }
 
-    /**
-     * method to show searching for a mulitmedia
-     *
-     * @param listName
-     * @param catName
-     * @throws IOException
-     */
+    
     private static void searchMultimedia(List<Catalogue> listName, String catName) throws IOException {
         System.out.println("Enter ID of multimedia to search");
         Scanner kb = new Scanner(System.in);
@@ -677,14 +513,6 @@ public class Backend {
 
     }
 
-    /**
-     * method to show editing a multimedia
-     *
-     * @param id
-     * @param catName
-     * @param listName
-     * @throws IOException
-     */
     private static void editMultName(int id, String catName, List<Catalogue> listName) throws IOException {
         System.out.println("Edit Multimedia");
         System.out.println("Enter New Multimedia Name: ");
@@ -704,14 +532,7 @@ public class Backend {
         }
     }
 
-    /**
-     * method to show deleting a multimedia
-     *
-     * @param id
-     * @param catName
-     * @param listName
-     * @throws IOException
-     */
+   
     private static void deleteMult(int id, String catName, List<Catalogue> listName) throws IOException {
         System.out.println("Delete multimedia");
         System.out.println("Are you sure you want to delete this multimedia?(y/n)");
@@ -738,14 +559,7 @@ public class Backend {
         }
     }
 
-    /**
-     * main method
-     *
-     * @param args
-     * @throws IOException
-     * @throws FileNotFoundException
-     * @throws ClassNotFoundException
-     */
+   
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         List<Catalogue> cats = new ArrayList<>();
         startBackend(cats);
